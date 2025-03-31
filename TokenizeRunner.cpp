@@ -11,6 +11,13 @@
 
 using namespace std::literals::string_literals;
 
+std::string trim(const std::string_view & source) {
+    std::string s(source);
+    s.erase(0,s.find_first_not_of(" \n\r\t"));
+    s.erase(s.find_last_not_of(" \n\r\t")+1);
+    return s;
+}
+
 void TokenizeRunner::Run(fs::path input_file_path, fs::path raw_output_file_path, fs::path output_file_path) {
     fs::file_status input_file_status = fs::status(input_file_path);
     if (input_file_status.type() == fs::file_type::not_found) {
@@ -38,9 +45,12 @@ void TokenizeRunner::Run(fs::path input_file_path, fs::path raw_output_file_path
                                  input_file_path.string(), raw_output_file_path.string());
         tokens_info = tokenizer->GetTokensInfo();
 
-        std::vector<TokenType> tokens;
+        std::vector<std::string> tokens;
         for (auto i : tokens_info) {
-            tokens.push_back(tokenizer->Decode(i));
+            const auto token = trim(tokenizer->Decode(i));
+            if (token.size() > 0) {
+                tokens.push_back(token);
+            }
         }
         nlohmann::json output = {
             {"tokens", tokens}

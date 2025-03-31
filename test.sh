@@ -22,39 +22,29 @@ declare -A expected_output
 expected_output["test.c"]='{
   "tokens": [
     "#include <stdio.h>",
-    "\n",
-    "int ",
+    "int",
     "main",
     "() {",
-    "\n",
-    "    ",
     "printf",
     "(\"Hello, World!\\n\");",
-    "\n",
-    "    return 0;",
-    "\n",
-    "}",
-    "\n"
+    "return 0;",
+    "}"
   ]
 }'
 expected_output["test.cpp"]='{
   "tokens": [
-    "int ",
+    "int",
     "main",
     "() {",
-    "\n",
-    "    int ",
+    "int",
     "a",
     ";",
-    "\n",
-    "    int ",
+    "int",
     "b",
-    " = ",
+    "=",
     "a",
-    " + 4;",
-    "\n",
-    "}",
-    "\n"
+    "+ 4;",
+    "}"
   ]
 }'
 
